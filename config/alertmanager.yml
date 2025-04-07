@@ -1,0 +1,23 @@
+receivers:
+- name: 'slack-notifications'
+#  slack_configs:
+#  - channel: '#demo-alerts'
+#    api_url: 'SLACK_WEBHOOK_URL'
+#    send_resolved: true
+#    text: >-
+#      {{ range .Alerts }}
+#      *Alert:* `{{ .Labels.severity }}`
+#
+#      *Description:* {{ .Annotations.description }}
+#
+#      *Details:*
+#        {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+#        {{ end }}
+#      {{ end }}
+
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 10s
+  group_interval: 3m
+  repeat_interval: 5m
+  receiver: 'slack-notifications'
